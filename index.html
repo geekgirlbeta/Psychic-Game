@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Guess The Number!</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/styleball.css">
+  </head>
+  <body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div><h1>Guess what letter I'm thinking of.</h1></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" id="win-score">
+                <h3>Wins: <span id="wins">0</span></h3>
+            </div>
+            <div class="col-md-6">
+                <div class="scene">
+                    <div class="wrapper">
+                        <ul class="ball">
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        <li class="ring"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="lose-score">
+                <h3>Losses: <span id="losses">0</span></h3>
+            </div>
+        </div>
+        <div class="box-2">
+            <div class="col-md-6" id="guesses">
+                <h2>Your guesses so far: <br><span id="guesses-so-far"></span></h2>
+                
+            </div>
+        </div>
+        <div class="box">
+            <div class="col-md-4" id="guesses-left-col">
+                <h2>Guesses left: <span id="guesses-left">10</span></h2>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+
+    // variables to store wins, losses
+    var wins = 0;
+    var losses = 0;
+    // variable to store the value 10 which will decrease by 1 for each choice
+    // unless choice is correct.
+    var guessesLeft = 10;
+
+    // variable to store which letters the user pressed on the keyboard.
+    var yourGuesses = [];   
+
+    // variable letters which stores a string containing the alphabet.
+    var letters = "abcdefghijklmnopqrstuvwxyz";
+
+    // variable to store the randomly picked value for the computer's guess.
+    var computerGuess = getRandomLetter();
+
+     // function to get a random letter for the computer's choice.
+    function getRandomLetter() {
+        return letters[Math.floor(Math.random() * letters.length)];
+    }
+    
+    function setGuessesLeft(amountLeft) {
+        guessesLeft = amountLeft;
+        document.querySelector("#guesses-left").innerHTML = guessesLeft;
+    }
+
+    function reset() {
+        yourGuesses = [];
+        setGuessesLeft(10);
+        computerGuess = getRandomLetter();
+        document.querySelector("#guesses-so-far").innerHTML = "";
+    }
+    
+    function myGuess(userGuess) {
+        if (guessesLeft > 1) {  
+            if (!yourGuesses.includes(userGuess)) {
+                yourGuesses.push(userGuess);
+                document.querySelector("#guesses-so-far").innerHTML = yourGuesses.join(', ');
+                setGuessesLeft(guessesLeft-1);
+            } else {
+                alert("You have picked " + userGuess + " already.")
+            }
+
+        } else {
+            reset();
+            losses++;
+            document.querySelector("#losses").innerHTML = losses;
+        }
+    }
+
+    // uses the document object and the onkeyup event to register and save
+    document.onkeyup = function(event) {
+        var userGuess = event.key;
+        myGuess(userGuess);
+
+        // uses the document object and the onkeyup event to register and save
+        // the user's keypress to the variable userGuess.
+        
+        if (computerGuess === userGuess) {
+            wins++;
+            document.querySelector("#wins").innerHTML = wins;
+            reset();
+        }
+    };
+
+
+
+
+
+    </script>
+    
+  </body>
+</html>
